@@ -4,8 +4,8 @@ const { connect } = require('mongoose');
 require('dotenv').config();
 
 
-const userRoutes=require('./routes/postRoutes')
-const postRoutes=require('./routes/userRoutes')
+const userRoutes=require('./routes/userRoutes')
+const postRoutes=require('./routes/postRoutes')
 
 const app = express();
 app.use(express.json({extended:true}));
