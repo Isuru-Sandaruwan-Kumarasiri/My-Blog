@@ -2,8 +2,8 @@
 //POST:api/users/register
 //UNPROTECTED
 
-const registerUser=(req,res,next)=>{
-    res.jons("Register user")
+const registerUser=async(req,res,next)=>{
+    res.json("Register user")
 }
 
 
@@ -13,8 +13,8 @@ const registerUser=(req,res,next)=>{
 //POST:api/users/login
 //UNPROTECTED
 
-const loginUser=(req,res,next)=>{
-    res.jons("loginuser")
+const loginUser=async(req,res,next)=>{
+    res.json("loginuser")
 }
 
 
@@ -24,8 +24,8 @@ const loginUser=(req,res,next)=>{
 //POST:api/users/:id
 //PROTECTED
 
-const getUser=(req,res,next)=>{
-    res.jons("user profile")
+const getUser=async(req,res,next)=>{
+    res.json("user profile")
 }
 
 
@@ -35,8 +35,8 @@ const getUser=(req,res,next)=>{
 //POST:api/users/change-avatar
 //PROTECTED
 
-const changeAvatar=(req,res,next)=>{
-    res.jons("change user avatar")
+const changeAvatar=async(req,res,next)=>{
+    res.json("change user avatar")
 }
 
 
@@ -46,8 +46,8 @@ const changeAvatar=(req,res,next)=>{
 //POST:api/users/edit-user
 //PROTECTED
 
-const editUser=(req,res,next)=>{
-    res.jons("edit user details")
+const editUser=async(req,res,next)=>{
+    res.json("edit user details")
 }
 
 
@@ -58,8 +58,8 @@ const editUser=(req,res,next)=>{
 //POST:api/users/authors
 //UNPROTECTED
 
-const getAuthor=(req,res,next)=>{
-    res.jons("get all users /authors")
+const getAuthor=async(req,res,next)=>{
+    res.json("get all users /authors")
 }
 
 module.exports={registerUser,loginUser,getUser,changeAvatar,editUser,getAuthor}

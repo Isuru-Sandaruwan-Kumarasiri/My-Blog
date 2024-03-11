@@ -9,10 +9,10 @@ const router=Router()
 
 router.post("/register",registerUser)
 router.post("/login",loginUser)
-router.post("/:id",getUser)
-router.post("/",getAuthor)
+router.get("/:id",getUser)
+router.get("/",getAuthor)
 router.post("/change-avatar",changeAvatar)
-router.post("/edit-user",editUser)
+router.patch("/edit-user",editUser)
 
 
 module.exports=router
