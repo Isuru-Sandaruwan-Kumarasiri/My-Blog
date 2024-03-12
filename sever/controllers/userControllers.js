@@ -1,5 +1,6 @@
 const bcrypt=require('bcryptjs');
-const jwt =require("jsonwebtoken")
+const jwt = require('jsonwebtoken');
+
 
 
 const User =require ("../models/userModel");
@@ -64,7 +65,7 @@ const registerUser=async(req,res,next)=>{
 const loginUser=async(req,res,next)=>{
     try {
         const {email,password}=req.body;
-        if(!email || ! password){
+        if(!email || !password){
             return next(new HttpError ("Fill in all fields",422))
         }
         const newEmail=email.toLowerCase();
@@ -78,8 +79,10 @@ const loginUser=async(req,res,next)=>{
             return next(new HttpError ("invalid credential ",422))
         }
         const {_id:id,name}=user;
-        const  token=jwt.sign({id,name},)                                       //npm install jsonwebtoken
-
+        const token = jwt.sign({ id, name }, process.env.JWT_SECRET, { expiresIn: "1d" });
+                                       //npm install jsonwebtoken
+        
+        res.status(200).json({token,id,name})
 
     } catch (error) {
         return next(new HttpError ("login failed.Please check your credentials",422))
