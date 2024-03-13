@@ -1,5 +1,8 @@
 const bcrypt=require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
+const { v4: uuid } = require('uuid');
 
 
 
@@ -118,9 +121,44 @@ const getUser=async(req,res,next)=>{
 
 const changeAvatar=async(req,res,next)=>{
     try {
-       res.json(req.files)
-       Console.log(req.files)
+       if(!req.files.avatar){
+        return next(new HttpError ("Please choose an image.",422))
+       }
+       //find user from database
+       const user=await User.findById(req.user.id)//const fs=require("fs")
+                                                   // const path=require("path")
+       //delete old avatar if exists
+       if(user.avatar){
+        fs.unlink(path.join(__dirname,'..','uploads',user.avatar),(err)=>{
+            if(err){
+                return next(new HttpError (err))
+            }
+        })
+       }
+       const {avatar}=req.files;
+       //cjeck file size
+       if (avatar.size>500000){
+        return next(new HttpError ("Profile picture too big.should be less than 500kb",422))
+       }
+       let fileName;
+       fileName=avatar.name;
+       let splittedFileName=fileName.split('.')//npm install uuid
+       let newFilename=splittedFileName[0]+uuid()+'.'+splittedFileName[splittedFileName.length-1]//const {v4:uuid}=require('uuid')
+       
+       avatar.mv(path.join(__dirname, '..', "uploads", newFilename), async (err) => {
+        if (err) {
+            return next(new HttpError(err));
+        }
+        
+    });
+    
+       const updatedAvatar=await User.findByIdAndUpdate(req.user.id,{avatar:newFilename},{new:true})
+       if(!updatedAvatar){
+        return next (new HttpError ("Avatar couldn't be changed",422))
+       }
+       res.status(200).json(updatedAvatar);
 
+       
     } catch (error) {
         return next(new HttpError (error))//npm install express-fileupload
     }
