@@ -117,7 +117,13 @@ const getUser=async(req,res,next)=>{
 //PROTECTED
 
 const changeAvatar=async(req,res,next)=>{
-    res.json("change user avatar")
+    try {
+       res.json(req.files)
+       Console.log(req.files)
+
+    } catch (error) {
+        return next(new HttpError (error))//npm install express-fileupload
+    }
 }
 
 
